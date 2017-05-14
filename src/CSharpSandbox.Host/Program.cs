@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CSharpSandbox.Host
+﻿namespace CSharpSandbox.Host
 {
     public class Program
     {
@@ -9,9 +7,6 @@ namespace CSharpSandbox.Host
             var scriptsHost = new ScriptsHost();
             scriptsHost.Initialize();
             scriptsHost.StartScripts();
-
-            while (true)
-                Console.ReadKey();
         }
     }
 }

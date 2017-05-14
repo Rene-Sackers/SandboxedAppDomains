@@ -5,7 +5,7 @@ namespace CSharpSandbox.SharedApi
 {
     public class Loader : MarshalByRefObject
     {
-        public void LoadClientScripts()
+        public void LoadClientScripts(string baseDirectory)
         {
             var allTypes = AppDomain.CurrentDomain
                 .GetAssemblies()
@@ -16,7 +16,11 @@ namespace CSharpSandbox.SharedApi
                 .ToList();
 
             foreach (var scriptType in scriptTypes)
-                Activator.CreateInstance(scriptType);
+            {
+                var clientScript = (ClientScript)Activator.CreateInstance(scriptType);
+                clientScript.BaseDirectory = baseDirectory;
+                clientScript.Loaded();
+            }
         }
     }
 }
