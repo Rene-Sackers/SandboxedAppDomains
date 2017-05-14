@@ -7,8 +7,8 @@ namespace CSharpSandbox.ClientScript
     {
         public override void Loaded()
         {
-            var filePath = Path.Combine(BaseDirectory, "test.txt");
-            File.WriteAllText(filePath, AppDomain.CurrentDomain.FriendlyName);
+            //var filePath = Path.Combine(BaseDirectory, "test.txt");
+            //File.WriteAllText(filePath, AppDomain.CurrentDomain.FriendlyName);
             //Process.Start(filePath);
         }
     }

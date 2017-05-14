@@ -35,9 +35,6 @@ namespace CSharpSandbox.Host
 
             var allowedStrongNames = GetLoadedAssembliesStrongNames(permissionSet);
 
-            //var extensionStrongNames = GetStrongNamesForFiles(dllFiles);
-            //allowedStrongNames.AddRange(extensionStrongNames);
-
             var scriptDomainSetup = new AppDomainSetup
             {
                 ApplicationTrust = new ApplicationTrust(permissionSet, allowedStrongNames)
