@@ -39,7 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AppDomainToolkit, Version=1.0.4.1, Culture=neutral, PublicKeyToken=f2fc7ab5180cf5c4, processorArchitecture=MSIL">
-      <HintPath>..\packages\AppDomainToolkit.1.0.4.3\lib\net\AppDomainToolkit.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\GitHub\AppDomainToolkit\AppDomainToolkit\bin\Debug\AppDomainToolkit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,7 +60,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="CSharpSandbox.Host.pfx" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSharpSandbox.SharedApi\CSharpSandbox.SharedApi.csproj">
@@ -67,6 +67,11 @@
       <Name>CSharpSandbox.SharedApi</Name>
       <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\AppDomainToolkit\AppDomainToolkit.dll" />
+    <Content Include="Lib\AppDomainToolkit\AppDomainToolkit.pdb" />
+    <Content Include="Lib\AppDomainToolkit\AppDomainToolkit.XML" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

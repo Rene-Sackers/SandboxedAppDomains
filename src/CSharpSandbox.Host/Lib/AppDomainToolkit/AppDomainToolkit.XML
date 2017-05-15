@@ -1,0 +1,1862 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AppDomainToolkit</name>
+    </assembly>
+    <members>
+        <member name="T:AppDomainToolkit.AppDomainContext">
+            <summary>
+            Loads assemblies into the contained application domain.<br/>
+            No-hassle wrapper for creating default instances of <see cref="T:AppDomainToolkit.AppDomainContext`2" />
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext.Create">
+            <summary>
+            Creates a new instance of the AppDomainContext class.
+            </summary>
+            <returns>
+            A new AppDomainContext.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext.Create(System.AppDomainSetup)">
+            <summary>
+            Creates a new instance of the AppDomainContext class.
+            </summary>
+            <param name="setupInfo">
+            The setup info.
+            </param>
+            <returns>
+            A new AppDomainContext.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext.Wrap(System.AppDomain)">
+            <summary>
+            Creates a new instance of the AppDomainContext class.
+            </summary>
+            <param name="domain">The domain to wrap in the context</param>
+            <returns></returns>
+        </member>
+        <member name="T:AppDomainToolkit.AppDomainContext`2">
+            <summary>
+            Loads assemblies into the contained application domain.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.#ctor(System.AppDomainSetup)">
+            <summary>
+            Initializes a new instance of the AppDomainAssemblyLoader class. The assembly environment will create
+            a new application domain with the location of the currently executing assembly as the application base. It
+            will also add that root directory to the assembly resolver's path in order to properly load a remotable
+            AssemblyLoader object into context. From here, add whatever assembly probe paths you wish in order to
+            resolve remote proxies, or extend this class if you desire more specific behavior.
+            </summary>
+            <param name="setupInfo">
+            The setup information.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.#ctor(System.AppDomain)">
+            <summary>
+            Initializes a new instance of the AppDomainContext class. The new AppDomainContext will wrap the given domain
+            </summary>
+            <param name="domain"></param>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.Finalize">
+            <summary>
+            Finalizes an instance of the AppDomainContext class.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.AppDomainContext`2.Domain">
+            <inheritdoc />
+        </member>
+        <member name="P:AppDomainToolkit.AppDomainContext`2.UniqueId">
+            <summary>
+            Gets a unique ID assigned to the environment. Useful for dictionary keys.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.AppDomainContext`2.AssemblyImporter">
+            <inheritdoc />
+        </member>
+        <member name="P:AppDomainToolkit.AppDomainContext`2.RemoteResolver">
+            <inheritdoc />
+        </member>
+        <member name="P:AppDomainToolkit.AppDomainContext`2.LoadedAssemblies">
+            <inheritdoc />
+            <remarks>
+            This property hits the remote AppDomain each time you ask for it, so don't call this in a
+            tight loop unless you like slow code.
+            </remarks>
+        </member>
+        <member name="P:AppDomainToolkit.AppDomainContext`2.ReflectionOnlyLoadedAssemblies">
+            <inheritdoc />
+            <remarks>
+            This property hits the remote AppDomain each time you ask for it, so don't call this in a
+            tight loop unless you like slow code.
+            </remarks>
+        </member>
+        <member name="P:AppDomainToolkit.AppDomainContext`2.IsDisposed">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.Create``2">
+            <summary>
+            Creates a new instance of the AppDomainContext class.
+            </summary>
+            <returns>
+            A new AppDomainContext.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.Create``2(System.AppDomainSetup)">
+            <summary>
+            Creates a new instance of the AppDomainContext class.
+            </summary>
+            <param name="setupInfo">
+            The setup info.
+            </param>
+            <returns>
+            A new AppDomainContext.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.Wrap(System.AppDomain)">
+            <summary>
+            Creates a new instance of the AppDomainContext class.
+            </summary>
+            <param name="domain">The appdomain to wrap.</param>
+            <returns>A new AppDomainContext.</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.FindByCodeBase(System.Uri)">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.FindByLocation(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.FindByFullName(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.LoadTarget(AppDomainToolkit.LoadMethod,AppDomainToolkit.IAssemblyTarget)">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.LoadTargetWithReferences(AppDomainToolkit.LoadMethod,AppDomainToolkit.IAssemblyTarget)">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.LoadAssembly(AppDomainToolkit.LoadMethod,System.String,System.String)">
+            <inheritdoc/>
+            <remarks>
+            In order to ensure that the assembly is loaded the way the caller expects, the LoadMethod property of
+            the remote domain assembly resolver will be temporarily set to the value of <paramref name="loadMethod"/>.
+            It will be reset to the original value after the load is complete.
+            </remarks>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.ReflectionOnlyLoadAssembly(AppDomainToolkit.LoadMethod,System.String)">
+            <inheritdoc/>
+            <remarks>
+            In order to ensure that the assembly is loaded the way the caller expects, the LoadMethod property of
+            the remote domain assembly resolver will be temporarily set to the value of <paramref name="loadMethod"/>.
+            It will be reset to the original value after the load is complete.
+            </remarks>
+        </member>
+        <member name="M:AppDomainToolkit.AppDomainContext`2.LoadAssemblyWithReferences(AppDomainToolkit.LoadMethod,System.String)">
+            <inheritdoc />
+            <remarks>
+            In order to ensure that the assembly is loaded the way the caller expects, the LoadMethod property of
+            the remote domain assembly resolver will be temporarily set to the value of <paramref name="loadMethod"/>.
+            It will be reset to the original value after the load is complete.
+            </remarks>
+        </member>
+        <member name="T:AppDomainToolkit.LoadMethod">
+            <summary>
+            Used to determine which load context assemblies should be loaded into by the loader.
+            </summary>
+        </member>
+        <member name="F:AppDomainToolkit.LoadMethod.LoadFrom">
+            <summary>
+            Loads the assembly into the LoadFrom context, which enables the assembly and all it's references to be discovered
+            and loaded into the target application domain. Despite it's penchant for DLL hell, this is probably the way to go by
+            default as long as you make sure to pass the base directory of the application to an AssemblyResolver instance such
+            that references can be properly resolved. This also allows for multiple assemblies of the same name to be loaded while
+            maintaining separate file names. This is the recommended way to go.
+            </summary>
+        </member>
+        <member name="F:AppDomainToolkit.LoadMethod.LoadFile">
+            <summary>
+            Loads an assembly into memory using the raw file name. This loads the assembly anonymously, so it won't have
+            a load context. Use this if you want the bits loaded, but make sure to pass the directory where this file lives to an 
+            AssemblyResolver instance so you can find it again. This is similar to LoadFrom except you don't get the free 
+            lookups for already existing assembly names via fusion. Use this for more control over assembly file loads.
+            </summary>
+        </member>
+        <member name="F:AppDomainToolkit.LoadMethod.LoadBits">
+            <summary>
+            Loads the bits of the target assembly into memory using the raw file name. This is, in essence, a dynamic assembly
+            for all the CLR cares. You won't ever be able to find this with an assembly resolver, so don't use this unless you look
+            for it by name. Be careful with this one.
+            </summary>
+        </member>
+        <member name="T:AppDomainToolkit.AssemblyLoader">
+            <summary>
+            This class will load assemblies into whatever application domain it's loaded into. It's just a simple convenience
+            wrapper around the static Assembly.Load* methods, with the main benefit being the ability to load an assembly
+            anonymously bitwise. When you load the assembly this way, there won't be any locking of the DLL file.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyLoader.LoadAssembly(AppDomainToolkit.LoadMethod,System.String,System.String)">
+            <inheritdoc /> 
+            <remarks>
+            If the LoadMethod for this instance is set to LoadBits and the path to the PDB file is unspecified then we will attempt to guess
+            the path to the PDB and load it.  Note that if an assembly is loaded into memory without it's debugging symbols then an
+            image exception will be thrown. Be wary of this. Loading an Assembly with the LoadBits method will not lock
+            the DLL file because the entire assembly is loaded into memory and the file handle is closed. Note that, however,
+            Assemblies loaded in this manner will not have a location associated with them--so you must then key the Assembly
+            by it's strong name. This can cause problems when loading multiple versions of the same assembly into a single
+            application domain.
+            </remarks>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyLoader.ReflectionOnlyLoadAssembly(AppDomainToolkit.LoadMethod,System.String)">
+            <inheritdoc /> 
+            <remarks>
+            LoadMethod.LoadFile is not supported. See LoadAssembly for more details.
+            </remarks>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyLoader.LoadAssemblyWithReferences(AppDomainToolkit.LoadMethod,System.String)">
+            <inheritdoc />
+            <remarks>
+            This implementation will perform a best-effort load of the target assembly and it's required references
+            into the current application domain. The .NET framework pins us in on which call we're allowed to use
+            when loading these assemblies, so we'll need to rely on the AssemblyResolver instance attached to the
+            AppDomain in order to load the way we want.
+            </remarks>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyLoader.GetAssemblies">
+            <inheritdoc />
+            <remarks>
+            Just a simple call to AppDomain.CurrentDomain.GetAssemblies(), nothing more.
+            </remarks>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyLoader.ReflectionOnlyGetAssemblies">
+            <inheritdoc />
+            <remarks>
+            Just a simple call to AppDomain.CurrentDomain.GetAssemblies(), nothing more.
+            </remarks>
+        </member>
+        <member name="T:AppDomainToolkit.AssemblyTarget">
+            <summary>
+            Simple class representing an assembly target. This class will be serialized accross application domains
+            instead of remoted. There's no reason to remote it because it's simply a wrapper around a couple of
+            strings anyway.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTarget.#ctor">
+            <summary>
+            Prevents a default instance of the AssemblyTarget class from being created.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.AssemblyTarget.CodeBase">
+            <inheritdoc />
+        </member>
+        <member name="P:AppDomainToolkit.AssemblyTarget.Location">
+            <inheritdoc />
+        </member>
+        <member name="P:AppDomainToolkit.AssemblyTarget.FullName">
+            <inheritdoc />
+        </member>
+        <member name="P:AppDomainToolkit.AssemblyTarget.IsDynamic">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTarget.FromAssembly(System.Reflection.Assembly)">
+            <summary>
+            Creates a new AssemblyTarget from the target assembly.
+            </summary>
+            <param name="assembly">
+            The assembly to create the target for.
+            </param>
+            <returns>
+            An AssemblyTarget.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTarget.FromPath(System.Uri,System.String,System.String)">
+            <summary>
+            Creates a new assembly target for the given location. The only required parameter here is the codebase.
+            </summary>
+            <param name="codebase">
+            The URI to the code base.
+            </param>
+            <param name="location">
+            The location. Must be a valid path and an existing file if supplied--defaults to null.
+            </param>
+            <param name="fullname">
+            The full name of the assembly. Defaults to null.
+            </param>
+            <returns>
+            An AssemblyTarget.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTarget.FromDynamic(System.String)">
+            <summary>
+            Creates a new assembly target for the given dynamic assembly.
+            </summary>
+            <param name="fullName">
+            The full name of the assembly.
+            </param>
+            <returns>
+            An AssemblyTarget.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.AssemblyTargetLoader">
+            <summary>
+            This class exists to prevent DLL hell. Assemblies must be loaded into specific application domains
+            without crossing those boundaries. We cannot simply remote an AssemblyLoader into a remote 
+            domain and load assemblies to use in the current domain. Instead, we introduct a tiny, serializable
+            implementation of the AssemblyTarget class that handles comunication between the foreign app
+            domain and the default one. This class is simply a wrapper around an assembly loader that translates
+            Assembly to AssemblyTarget instances before shipping them back to the parent domain.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTargetLoader.#ctor">
+            <summary>
+            Initializes a new instance of the RemotableAssemblyLoader class. This parameterless ctor is
+            required for remoting.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTargetLoader.LoadAssembly(AppDomainToolkit.LoadMethod,System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTargetLoader.ReflectionOnlyLoadAssembly(AppDomainToolkit.LoadMethod,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTargetLoader.LoadAssemblyWithReferences(AppDomainToolkit.LoadMethod,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTargetLoader.GetAssemblies">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.AssemblyTargetLoader.ReflectionOnlyGetAssemblies">
+            <inheritdoc />
+        </member>
+        <member name="T:AppDomainToolkit.DisposableAppDomain">
+            <summary>
+            This is a thin wrapper around the .NET AppDomain class that enables safe disposal. Use
+            these objects where you would normally grab an AppDomain object. Note that if the 
+            current application domain is passed to this class, a call to Dispose will do nothing. We will
+            never unload the current application domain.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.DisposableAppDomain.#ctor(System.AppDomain)">
+            <summary>
+            Initializes a new instance of the DisposableAppDomain class.
+            </summary>
+            <param name="domain">
+            The domain to wrap.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.DisposableAppDomain.Finalize">
+            <summary>
+            Finalizes an instance of the DisposableAppDomain class.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.DisposableAppDomain.IsDisposed">
+            <inheritdoc />
+        </member>
+        <member name="P:AppDomainToolkit.DisposableAppDomain.Domain">
+            <summary>
+            Gets the wrapped application domain.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.DisposableAppDomain.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.DisposableAppDomain.OnDispose(System.Boolean)">
+            <summary>
+            Should be called when the object is being disposed.
+            </summary>
+            <param name="disposing">
+            Was Dispose() called or did we get here from the finalizer?
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.IAppDomainContext">
+            <summary>
+            Defines behavior for implementations that load assemblies into a built-in application domain.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAppDomainContext.Domain">
+            <summary>
+            Gets the contained application domain.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAppDomainContext.RemoteResolver">
+            <summary>
+            Gets the assembly resolver responsible for resolving assemblies in the remote application domain.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAppDomainContext.AssemblyImporter">
+            <summary>
+            Gets the assembly resolver responsible for resolving assemblies in the current application domain. Use this to import assemblies
+            from foreign domains into the current domain by setting it up exactly like the remote one.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAppDomainContext.LoadedAssemblies">
+            <summary>
+            Gets a list of all assemblies loaded into this domain without bleeding them into the current
+            application domain.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.IAppDomainContext.FindByCodeBase(System.Uri)">
+            <summary>
+            Returns the first assembly found with the target codebase URI.
+            </summary>
+            <param name="codebaseUri">
+            The URI to look for.
+            </param>
+            <returns>
+            Returns the first assembly found with the target codebase URI, or null if none are found.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAppDomainContext.FindByLocation(System.String)">
+            <summary>
+            Returns the first assembly found with the target location.
+            </summary>
+            <param name="location">
+            The location to check for.
+            </param>
+            <returns>
+            Returns the first assembly found with the target location, or null if none are found.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAppDomainContext.FindByFullName(System.String)">
+            <summary>
+            Returns the first assembly found with the target full name.
+            </summary>
+            <param name="fullname">
+            The name of the assembly.
+            </param>
+            <returns>
+            Returns the first assembly found with the target full name, or null if none are found.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAppDomainContext.LoadTarget(AppDomainToolkit.LoadMethod,AppDomainToolkit.IAssemblyTarget)">
+            <summary>
+            Loads the assembly target into the application domain managed by the context.
+            </summary>
+            <param name="loadMethod">
+            The LoadMethod to use when importing the assembly.
+            </param>
+            <param name="target">
+            The assembly target to load.
+            </param>
+            <returns>
+            An assembly target pointing to the assembly to load.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAppDomainContext.LoadTargetWithReferences(AppDomainToolkit.LoadMethod,AppDomainToolkit.IAssemblyTarget)">
+            <summary>
+            Loads the assembly target into the application domain managed by the context along with any
+            reference assemblies
+            </summary>
+            <param name="loadMethod">
+            The LoadMethod to use when importing the assembly.
+            </param>
+            <param name="target">
+            The assembly target to load.
+            </param>
+            <returns>
+            A list of assembly targets pointing to the assemblies that were loaded.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAppDomainContext.LoadAssembly(AppDomainToolkit.LoadMethod,System.String,System.String)">
+            <summary>
+            Loads the assembly at the specified path into the application domain managed by the 
+            context.
+            </summary>
+            <param name="loadMethod">
+            The LoadMethod to use when importing the assembly.
+            </param>
+            <param name="path">
+            The path to the assembly.
+            </param>
+            <param name="pdbPath">
+            The path to the assembly's PDB file.
+            </param>
+            <returns>
+            An assembly target pointing to the loaded assembly.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAppDomainContext.LoadAssemblyWithReferences(AppDomainToolkit.LoadMethod,System.String)">
+            <summary>
+            Loads the assembly target into the application domain managed by the context along with any
+            reference assemblies
+            </summary>
+            <param name="loadMethod">
+            The LoadMethod to use when importing the assembly.
+            </param>
+            <param name="path">
+            The path to the assembly.
+            </param>
+            <returns>
+            A list of assembly targets pointing to the assemblies that were loaded.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.IAssemblyLoader">
+            <summary>
+            Defines behavior for an instance class that should act similar to the static methods on the
+            Assembly class. The reason for this is to support hot-swappable loading implemenations and
+            facilitate better testing of encironments by stubbing out how each load method executes.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyLoader.LoadAssembly(AppDomainToolkit.LoadMethod,System.String,System.String)">
+            <summary>
+            Loads the target assembly with the indicated load method into the current application domain
+            and returns it.
+            </summary>
+            <param name="loadMethod">
+            The load method to use.
+            </param>
+            <param name="assemblyPath">
+            The path to the assembly to load.
+            </param>
+            <param name="pdbPath">
+            The path to the PDB file. Defaults to null, which should result in an intelligent search for the correct
+            PDB file given the assemblies file name.
+            </param>
+            <returns>
+            The target assembly.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyLoader.ReflectionOnlyLoadAssembly(AppDomainToolkit.LoadMethod,System.String)">
+            <summary>
+            Loads the target assembly for reflection only with the indicated load method into the current application domain
+            and returns it.
+            </summary>
+            <param name="loadMethod">
+            The load method to use.
+            </param>
+            <param name="assemblyPath">
+            The path to the assembly to load.
+            </param>
+            <returns>
+            The target assembly.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyLoader.LoadAssemblyWithReferences(AppDomainToolkit.LoadMethod,System.String)">
+            <summary>
+            Loads the target assembly along with all of it's references and corresponding PDB files if they exist.
+            This should perform a best effort guess as to where these assemblies should live, and it should
+            load these assemblies into the current application domain and return the original assembly at
+            the target path.
+            </summary>
+            <param name="loadMethod">
+            The load method to use.
+            </param>
+            <param name="assemblyPath">
+            The path to the assembly to load.
+            </param>
+            <returns>
+            The target assembly.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyLoader.GetAssemblies">
+            <summary>
+            Gets an array of all the assemblies currently loaded into the current application domain.
+            </summary>
+            <returns>
+            An array of assemblies.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyLoader.ReflectionOnlyGetAssemblies">
+            <summary>
+            Gets an array of all the assemblies currently loaded into the current application domain.
+            </summary>
+            <returns>
+            An array of assemblies.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.IAssemblyResolver">
+            <summary>
+            Defines behavior for an object that is able to resolve assemblies for a given application domain.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAssemblyResolver.LoadMethod">
+            <summary>
+            Gets or sets the load method for the resolver.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAssemblyResolver.ApplicationBase">
+            <summary>
+            Gets or sets the ApplicationBase (path) property.
+            Default PathBasedAssemblyResolver supports semicolon delimited paths.
+            </summary>
+            <remarks>
+            In order to provide proper extensibility, allow the IAssemblyResolver 
+            implementation to choose how and when to use these paths when resolving. 
+            </remarks>
+        </member>
+        <member name="P:AppDomainToolkit.IAssemblyResolver.PrivateBinPath">
+            <summary>
+            Gets or sets the PrivateBinPath property. 
+            Default PathBasedAssemblyResolver supports semicolon delimited paths.
+            </summary>
+            <remarks>
+            In order to provide proper extensibility, allow the IAssemblyResolver 
+            implementation to choose how and when to use these paths when resolving. 
+            </remarks>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyResolver.AddProbePath(System.String)">
+            <summary>
+            Adds a probe path to the assembly loader. This is a directory that will be searched while assembly
+            resolver events are being processed.
+            </summary>
+            <param name="path">
+            The path to probe.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyResolver.AddProbePaths(System.String[])">
+            <summary>
+            Adds a probe path to the assembly loader. These are directories that will be searched while assembly
+            resolver events are being processed.
+            </summary>
+            <param name="paths">
+            The paths to probe.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyResolver.Resolve(System.Object,System.ResolveEventArgs)">
+            <summary>
+            Resolves assemblies. This enables all assembly loaders to be able to handle the resolve event in their specified
+            application domain.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AppDomainToolkit.IAssemblyTarget">
+            <summary>
+            This is a basic wrapper around reflection or CCI metadata based assemblies. It, however, allows referencing
+            the assembly without loading it into memory, i.e. by it's file name. Although trivial, it's key to enabling 
+            remoting across application domains for assembly loading and processing in any context.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAssemblyTarget.CodeBase">
+            <summary>
+            Gets the location of the code base on disk.
+            Can be null if the assembly is dynamic
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAssemblyTarget.Location">
+            <summary>
+            Gets the location of the assembly, if applicable.
+            Can be null if the assembly is dynamic
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAssemblyTarget.FullName">
+            <summary>
+            Gets the full name of the assembly target.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IAssemblyTarget.IsDynamic">
+            <summary>
+            Indicates if the assembly is dynamic.
+            If true, CodeBase and Location will be null.
+            </summary>
+        </member>
+        <member name="T:AppDomainToolkit.IAssemblyTargetLoader">
+            <summary>
+            Defines behavior for a class that loads assembly target instances instead of raw assemblies.
+            This is specifically useful when loading assemblies into other application domains, but still
+            wishing to keep tabs on what file specifically was loaded. This is a mirror of the IAssemblyLoader
+            interface, except with assembly targets instead of raw reflection assemblies.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyTargetLoader.LoadAssembly(AppDomainToolkit.LoadMethod,System.String,System.String)">
+            <summary>
+            Loads the target assembly with the indicated load method into the current application domain and
+            returns an assembly target.
+            </summary>
+            <param name="loadMethod">
+            The load method to use. 
+            </param>
+            <param name="assemblyPath">
+            The path to the assembly to load.
+            </param>
+            <param name="pdbPath">
+            The path to the PDB file. Defaults to null, which should result in an intelligent search for the correct
+            PDB file given the assemblies file name.
+            </param>
+            <returns>
+            An assembly target pointing to the target assembly.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyTargetLoader.ReflectionOnlyLoadAssembly(AppDomainToolkit.LoadMethod,System.String)">
+            <summary>
+            Loads the target assembly for reflection only with the indicated load method 
+            into the current application domain and returns an assembly target.
+            </summary>
+            <param name="loadMethod">
+            The load method to use. 
+            </param>
+            <param name="assemblyPath">
+            The path to the assembly to load.
+            </param>
+            <returns>
+            An assembly target pointing to the target assembly.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyTargetLoader.LoadAssemblyWithReferences(AppDomainToolkit.LoadMethod,System.String)">
+            <summary>
+            Lads the target assembly with all of it's referencings and corresponding PDB files if they exist. This
+            should perform a best effor guess as to where these assemblies should life, and it should load the
+            assemblies into the current application domain and return an assembly target pointing to the original
+            assembly at the target path.
+            </summary>
+            <param name="loadMethod">
+            The load method to use.
+            </param>
+            <param name="assemblyPath">
+            The path to the assembly to load.
+            </param>
+            <returns>
+            A list of loaded assemblies.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyTargetLoader.GetAssemblies">
+            <summary>
+            Gets a list of all the assemblies loaded into the current application domain.
+            </summary>
+            <returns>
+            An array of AssemblyTargets.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.IAssemblyTargetLoader.ReflectionOnlyGetAssemblies">
+            <summary>
+            Gets a list of all the assemblies loaded into the current application domain.
+            </summary>
+            <returns>
+            An array of AssemblyTargets.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.IDisposable">
+            <summary>
+            Basic extension of the System.IDisposable interface that allows the implementation to 
+            manipulate a flag indicating if the object has been disposed or not.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.IDisposable.IsDisposed">
+            <summary>
+            Gets a value indicating whether this object has been disposed or not.
+            </summary>
+        </member>
+        <member name="T:AppDomainToolkit.MarshalableTaskCompletionSource`1">
+            <summary>
+            Marshalable TaskCompletionSource
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:AppDomainToolkit.PathBasedAssemblyResolver">
+            <summary>
+            Handles resolving assemblies in application domains. This class is helpful when attempting to load a
+            particular assembly into an application domain and the assembly you're looking for doesn't exist in the
+            main application bin path. This 'feature' of the .NET framework makes assembly loading very, very
+            irritating, but this little helper class should alleviate much of the pains here. Note that it extends 
+            MarshalByRefObject, so it can be remoted into another application domain. Paths to directories containing
+            assembly files that you wish to load should be added to an instance of this class, and then the Resolve
+            method should be assigned to the AssemblyResolve event on the target application domain.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.PathBasedAssemblyResolver.#ctor">
+            <summary>
+            Initializes a new instance of the PathBasedAssemblyResolver class. Exists for MarshalByRefObject
+            remoting into app domains.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.PathBasedAssemblyResolver.#ctor(AppDomainToolkit.IAssemblyLoader,AppDomainToolkit.LoadMethod)">
+            <summary>
+            Initializes a new instance of the AssemblyResolver class. A default instance of this class will resolve
+            assemblies into the LoadFrom context.
+            </summary>
+            <param name="loader">
+            The loader to use when loading assemblies. Default is null, which will create and use an instance
+            of the RemotableAssemblyLoader class.
+            </param>
+            <param name="loadMethod">
+            The load method to use when loading assemblies. Defaults to LoadMethod.LoadFrom.
+            </param>
+        </member>
+        <member name="P:AppDomainToolkit.PathBasedAssemblyResolver.LoadMethod">
+            <inheritdoc />
+        </member>
+        <member name="F:AppDomainToolkit.PathBasedAssemblyResolver._applicationBase">
+            <inheritdoc />
+        </member>
+        <member name="F:AppDomainToolkit.PathBasedAssemblyResolver._privateBinPath">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.PathBasedAssemblyResolver.AddProbePath(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.PathBasedAssemblyResolver.AddProbePaths(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.PathBasedAssemblyResolver.RemoveProbePath(System.String)">
+            <summary>
+            Removes the given probe path or semicolon separated list of probe paths from the assembly loader.
+            </summary>
+            <param name="path">The path to remove.</param>
+        </member>
+        <member name="M:AppDomainToolkit.PathBasedAssemblyResolver.RemoveProbePaths(System.String[])">
+            <summary>
+            Removes the given probe paths from the assembly loader.
+            </summary>
+            <param name="paths">The paths to remove.</param>
+        </member>
+        <member name="M:AppDomainToolkit.PathBasedAssemblyResolver.Resolve(System.Object,System.ResolveEventArgs)">
+            <inheritdoc />
+        </member>
+        <member name="T:AppDomainToolkit.Remote`1">
+            <summary>
+            Allows for isolated creation of an object of type T imported into another
+            application domain.
+            </summary>
+            <typeparam name="T">
+            The type of object to import. Must be a deriviative of MarshalByRefObject.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.Remote`1.#ctor(AppDomainToolkit.DisposableAppDomain,`0)">
+            <summary>
+            Initializes a new instance of the Remote class.
+            </summary>
+            <param name="domain">
+            The disposable app domain where the remote object lives.
+            </param>
+            <param name="remoteObject">
+            The remote object.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.Remote`1.Finalize">
+            <summary>
+            Finalizes an instance of the Remote class.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.Remote`1.RemoteObject">
+            <summary>
+            Gets the wrapped value.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.Remote`1.Domain">
+            <summary>
+            Gets the application domain where the wrapped value lives.
+            </summary>
+        </member>
+        <member name="P:AppDomainToolkit.Remote`1.IsDisposed">
+            <inheritdoc />
+        </member>
+        <member name="M:AppDomainToolkit.Remote`1.CreateProxy(AppDomainToolkit.DisposableAppDomain,System.Object[])">
+            <summary>
+            Creates a new Remote object.
+            </summary>
+            <param name="wrappedDomain">
+            The target AppDomain, wrapped for disposable goodness.
+            </param>
+            <param name="constructorArgs">
+            A list of constructor arguments to pass to the remote object.
+            </param>
+            <returns>
+            A remote proxy to an object of type T living in the target wrapped application domain.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.Remote`1.CreateProxy(System.AppDomain,System.Object[])">
+            <summary>
+            Creates a new remote.
+            </summary>
+            <param name="domain">
+            The domain for the remote. Default value is null, in which case a new application domain  that 
+            mirrors the current one will be automatically created.
+            </param>
+            <param name="constructorArgs">
+            A list of constructor arguments to pass to the remote object.
+            </param>
+            <returns>
+            A remote proxy to an object of type T living in the target application domain.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.Remote`1.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:AppDomainToolkit.Remote`1.OnDispose(System.Boolean)">
+            <summary>
+            Should be called when the object is being disposed.
+            </summary>
+            <param name="disposing">
+            Was Dispose() called or did we get here from the finalizer?
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteAction">
+            <summary>
+            Executes an action in another application domain.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteAction class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction.Invoke(System.AppDomain,System.Action)">
+            <summary>
+            Invokes an action remotely.
+            </summary>
+            <param name="domain">
+            The domain to execute the action in.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction.Invoke``1(System.AppDomain,``0,System.Action{``0})">
+            <summary>
+            Invokes the target action.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <param name="domain">
+            The domain to execute the action in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction.Invoke``2(System.AppDomain,``0,``1,System.Action{``0,``1})">
+            <summary>
+            Invokes the target action.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <param name="domain">
+            The domain to execute the action in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction.Invoke``3(System.AppDomain,``0,``1,``2,System.Action{``0,``1,``2})">
+            <summary>
+            Invokes the target action.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <param name="domain">
+            The domain to execute the action in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction.Invoke``4(System.AppDomain,``0,``1,``2,``3,System.Action{``0,``1,``2,``3})">
+            <summary>
+            Invokes the target action.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="T4">
+            Fourth argument type.
+            </typeparam>
+            <param name="domain">
+            The domain to execute the action in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="arg4">
+            The fourth argument.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteAction`1">
+            <summary>
+            Executes an action in another application domain.
+            </summary>
+            <typeparam name="T">
+            First argument type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction`1.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteAction class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction`1.Invoke(`0,System.Action{`0})">
+            <summary>
+            Invokes the target action.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteAction`2">
+            <summary>
+            Executes an action in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction`2.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteAction class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction`2.Invoke(`0,`1,System.Action{`0,`1})">
+            <summary>
+            Invokes the target action.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteAction`3">
+            <summary>
+            Executes an action in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction`3.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteAction class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction`3.Invoke(`0,`1,`2,System.Action{`0,`1,`2})">
+            <summary>
+            Invokes the target action.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteAction`4">
+            <summary>
+            Executes an action in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="T4">
+            Fourth argument type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction`4.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteAction class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteAction`4.Invoke(`0,`1,`2,`3,System.Action{`0,`1,`2,`3})">
+            <summary>
+            Invokes the target action.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="arg4">
+            The fourth argument.
+            </param>
+            <param name="toInvoke">
+            The action to invoke.
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFunc">
+            <summary>
+            Static class for executing functions in foreign application domains.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc.Invoke``1(System.AppDomain,System.Func{``0})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc.Invoke``2(System.AppDomain,``0,System.Func{``0,``1})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc.Invoke``3(System.AppDomain,``0,``1,System.Func{``0,``1,``2})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc.Invoke``4(System.AppDomain,``0,``1,``2,System.Func{``0,``1,``2,``3})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc.Invoke``5(System.AppDomain,``0,``1,``2,``3,System.Func{``0,``1,``2,``3,``4})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="T4">
+            Fourth argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="arg4">
+            The fourth argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFunc`1">
+            <summary>
+            Executes a function in another application domain.
+            </summary>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`1.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteFunc class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`1.Invoke(System.Func{`0})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFunc`2">
+            <summary>
+            Executes a function in another application domain.
+            </summary>
+            <typeparam name="T">
+            First argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`2.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteFunc class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`2.Invoke(`0,System.Func{`0,`1})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFunc`3">
+            <summary>
+            Executes a function in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`3.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteFunc class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`3.Invoke(`0,`1,System.Func{`0,`1,`2})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFunc`4">
+            <summary>
+            Executes a function in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`4.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteFunc class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`4.Invoke(`0,`1,`2,System.Func{`0,`1,`2,`3})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFunc`5">
+            <summary>
+            Executes a function in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="T4">
+            Fourth argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`5.#ctor">
+            <summary>
+            Initializes a new instance of the RemoteFunc class.
+            </summary>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFunc`5.Invoke(`0,`1,`2,`3,System.Func{`0,`1,`2,`3,`4})">
+            <summary>
+            Invokes the target function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="arg4">
+            The fourth argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The result.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFuncAsync">
+            <summary>
+            Static class for executing Async functions in foreign application domains.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:AppDomainToolkit.RemoteFuncAsync.InvokeAsync``1(System.AppDomain,System.Func{System.Threading.Tasks.Task{``0}})" -->
+        <member name="M:AppDomainToolkit.RemoteFuncAsync.InvokeAsync``2(System.AppDomain,``0,System.Func{``0,System.Threading.Tasks.Task{``1}})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The Task result.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync.InvokeAsync``3(System.AppDomain,``0,``1,System.Func{``0,``1,System.Threading.Tasks.Task{``2}})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The Task result.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync.InvokeAsync``4(System.AppDomain,``0,``1,``2,System.Func{``0,``1,``2,System.Threading.Tasks.Task{``3}})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The Task result.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync.InvokeAsync``5(System.AppDomain,``0,``1,``2,``3,System.Func{``0,``1,``2,``3,System.Threading.Tasks.Task{``4}})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="T4">
+            Fourth argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="arg4">
+            The fourth argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The Task result.
+            </returns>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync.InvokeAsync``6(System.AppDomain,``0,``1,``2,``3,``4,System.Func{``0,``1,``2,``3,``4,System.Threading.Tasks.Task{``5}})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="T4">
+            Fourth argument type.
+            </typeparam>
+            <typeparam name="T5">
+            Fifth argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+            <param name="domain">
+            The domain to invoke the function in.
+            </param>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="arg4">
+            The fourth argument.
+            </param>
+            <param name="arg5">
+            The fifth argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <returns>
+            The Task result.
+            </returns>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFuncAsync`1">
+            <summary>
+            Executes an asynchronous function in another application domain.
+            </summary>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync`1.Invoke(System.Func{System.Threading.Tasks.Task{`0}},AppDomainToolkit.MarshalableTaskCompletionSource{`0})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <param name="tcs">
+            The TaskCompletionSource to propagate Task results
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFuncAsync`2">
+            <summary>
+            Executes an asynchronous function in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync`2.Invoke(`0,System.Func{`0,System.Threading.Tasks.Task{`1}},AppDomainToolkit.MarshalableTaskCompletionSource{`1})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <param name="tcs">
+            The TaskCompletionSource to propagate Task results
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFuncAsync`3">
+            <summary>
+            Executes an asynchronous function in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync`3.Invoke(`0,`1,System.Func{`0,`1,System.Threading.Tasks.Task{`2}},AppDomainToolkit.MarshalableTaskCompletionSource{`2})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <param name="tcs">
+            The TaskCompletionSource to propagate Task results
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFuncAsync`4">
+            <summary>
+            Executes an asynchronous function in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync`4.Invoke(`0,`1,`2,System.Func{`0,`1,`2,System.Threading.Tasks.Task{`3}},AppDomainToolkit.MarshalableTaskCompletionSource{`3})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <param name="tcs">
+            The TaskCompletionSource to propagate Task results
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFuncAsync`5">
+            <summary>
+            Executes an asynchronous function in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="T4">
+            Fourth argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync`5.Invoke(`0,`1,`2,`3,System.Func{`0,`1,`2,`3,System.Threading.Tasks.Task{`4}},AppDomainToolkit.MarshalableTaskCompletionSource{`4})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="arg4">
+            The fourth argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <param name="tcs">
+            The TaskCompletionSource to propagate Task results
+            </param>
+        </member>
+        <member name="T:AppDomainToolkit.RemoteFuncAsync`6">
+            <summary>
+            Executes an asynchronous function in another application domain.
+            </summary>
+            <typeparam name="T1">
+            First argument type.
+            </typeparam>
+            <typeparam name="T2">
+            Second argument type.
+            </typeparam>
+            <typeparam name="T3">
+            Third argument type.
+            </typeparam>
+            <typeparam name="T4">
+            Fourth argument type.
+            </typeparam>
+            <typeparam name="T5">
+            Fifth argument type.
+            </typeparam>
+            <typeparam name="TResult">
+            The result type.
+            </typeparam>
+        </member>
+        <member name="M:AppDomainToolkit.RemoteFuncAsync`6.Invoke(`0,`1,`2,`3,`4,System.Func{`0,`1,`2,`3,`4,System.Threading.Tasks.Task{`5}},AppDomainToolkit.MarshalableTaskCompletionSource{`5})">
+            <summary>
+            Invokes the target asynchronous function.
+            </summary>
+            <param name="arg1">
+            The first argument.
+            </param>
+            <param name="arg2">
+            The second argument.
+            </param>
+            <param name="arg3">
+            The third argument.
+            </param>
+            <param name="arg4">
+            The fourth argument.
+            </param>
+            <param name="arg5">
+            The fifth argument.
+            </param>
+            <param name="toInvoke">
+            The function to invoke.
+            </param>
+            <param name="tcs">
+            The TaskCompletionSource to propagate Task results
+            </param>
+        </member>
+    </members>
+</doc>

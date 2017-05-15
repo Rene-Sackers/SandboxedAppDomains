@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CSharpSandbox.SharedApi
 {
-    public class Loader : MarshalByRefObject
+    internal class Loader : MarshalByRefObject
     {
         public void LoadClientScripts(string baseDirectory)
         {
@@ -19,7 +19,7 @@ namespace CSharpSandbox.SharedApi
             {
                 var clientScript = (ClientScript)Activator.CreateInstance(scriptType);
                 clientScript.BaseDirectory = baseDirectory;
-                clientScript.Loaded();
+                clientScript.CallLoaded();
             }
         }
     }

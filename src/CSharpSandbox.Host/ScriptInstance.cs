@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
@@ -30,8 +29,13 @@ namespace CSharpSandbox.Host
             var dllFiles = GetDllFiles().ToList();
 
             var permissionSet = new PermissionSet(PermissionState.None);
+
+            permissionSet.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.MemberAccess)); // Needed for AppDomainToolkit loader
+
             permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
-            permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write, _scriptFolderPath));
+            permissionSet.AddPermission(new FileIOPermission(
+                FileIOPermissionAccess.Read | FileIOPermissionAccess.Write | FileIOPermissionAccess.Append | FileIOPermissionAccess.PathDiscovery,
+                _scriptFolderPath));
 
             var allowedStrongNames = GetLoadedAssembliesStrongNames(permissionSet);
 
@@ -39,24 +43,16 @@ namespace CSharpSandbox.Host
             {
                 ApplicationTrust = new ApplicationTrust(permissionSet, allowedStrongNames)
             };
-
+            
             var clientScriptAppDomain = AppDomainContext.Create(scriptDomainSetup);
 
             foreach (var dllFile in dllFiles)
-                clientScriptAppDomain.LoadAssembly(LoadMethod.LoadFile, dllFile);
-
+                clientScriptAppDomain.LoadAssembly(LoadMethod.LoadFrom, dllFile);
+            
             var remoteScript = Remote<Loader>.CreateProxy(clientScriptAppDomain.Domain);
             remoteScript.RemoteObject.LoadClientScripts(_scriptFolderPath);
         }
-
-        private static IEnumerable<StrongName> GetStrongNamesForFiles(IEnumerable<string> dllFiles)
-        {
-            return dllFiles
-                .Select(Assembly.ReflectionOnlyLoadFrom)
-                .Select(assembly => assembly?.Evidence.GetHostEvidence<StrongName>())
-                .Where(dllFileStrongName => dllFileStrongName != null);
-        }
-
+        
         private static IEnumerable<StrongName> GetLoadedAssembliesStrongNames(PermissionSet permissionSet)
         {
             var allowedLibraries = new List<string>();
@@ -85,7 +81,19 @@ namespace CSharpSandbox.Host
             permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, allowedLibraries.ToArray()));
         }
 
-        private IEnumerable<string> GetDllFiles() => Directory.GetFiles(_scriptFolderPath, "*.dll");
+        private IEnumerable<string> GetDllFiles()
+        {
+            var loadedAssembliesFullNames = AppDomain.CurrentDomain.GetAssemblies().Select(a => a.FullName).ToList();
+
+            foreach (var dllFile in Directory.GetFiles(_scriptFolderPath, "*.dll"))
+            {
+                var dllFileFullName = Assembly.ReflectionOnlyLoadFrom(dllFile)?.FullName;
+                if (string.IsNullOrWhiteSpace(dllFileFullName)) continue;
+                if (loadedAssembliesFullNames.Contains(dllFileFullName)) continue;
+
+                yield return dllFile;
+            }
+        }
         
         private static string GetAssemblyLocation(Assembly assembly)
         {

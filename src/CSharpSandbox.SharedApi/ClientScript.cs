@@ -3,7 +3,12 @@
     public abstract class ClientScript
     {
         public string BaseDirectory { get; internal set; }
+
+        internal void CallLoaded()
+        {
+            Loaded();
+        }
         
-        public abstract void Loaded();
+        protected abstract void Loaded();
     }
 }
