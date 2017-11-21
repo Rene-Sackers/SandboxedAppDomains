@@ -4,12 +4,12 @@ using System.Reflection;
 
 namespace CSharpSandbox.ClientScript
 {
-	public class SomeClientScript : ClientSharedApi.ClientScript
+	public class SampleClientScript : ClientSharedApi.ClientScript
 	{
 		protected override void Loaded()
 		{
-			var filePath = Path.Combine(DataDirectoryPath, "test.txt");
-			//filePath = "C:\\text.txt";
+			var filePath = Path.Combine(DataDirectoryPath, "test.txt"); // Should be allowed
+			//filePath = "C:\\text.txt"; // Will cause permission error
 			File.WriteAllText(filePath, AppDomain.CurrentDomain.FriendlyName);
 
 			ClientApi.SampleApiMethod("Test argument.");
