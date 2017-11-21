@@ -16,6 +16,12 @@ The following permissions have been granted to the child domains:
 
 More explanation can be found under the `CreatePermissionSet()` method in [ScriptInstance.cs](src/CSharpSandbox.Host/ScriptInstance.cs)
 
+## AppDomainToolkit
+
+This project uses [@jduv](https://github.com/jduv)'s [AppDomainToolkit](https://github.com/jduv/AppDomainToolkit). Which makes it significantly easier to set up app domains like this.
+
+Due to an issue discovered in the code, a custom compiled version of this library has been included (with permission) until the NuGet package gets updated. See [issue #25](https://github.com/jduv/AppDomainToolkit/issues/25).
+
 ## .pfx password
 
 In case you need it:
