@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using System.Security;
+
 #pragma warning disable 67
 
 namespace CSharpSandbox.ClientSharedApi
@@ -27,7 +27,7 @@ namespace CSharpSandbox.ClientSharedApi
 			if (eventDelegate == null) return;
 
 			foreach (var handler in eventDelegate.GetInvocationList())
-				handler.Method.Invoke(handler.Target, new object[] { this, arguments });
+				handler.Method.Invoke(handler.Target, arguments);
 		}
 	}
 }
