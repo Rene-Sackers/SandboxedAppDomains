@@ -20,6 +20,8 @@ namespace CSharpSandbox.ClientScript
 		private static void ClientApiOnSampleClientEvent(string argument)
 		{
 			Console.WriteLine($"Event on client triggered: {argument}. Executing assembly: {Assembly.GetExecutingAssembly()}");
+
+			throw new InvalidOperationException("test client exception");
 		}
 	}
 }

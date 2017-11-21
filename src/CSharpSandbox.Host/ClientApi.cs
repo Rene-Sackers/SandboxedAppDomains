@@ -27,8 +27,15 @@ namespace CSharpSandbox.Host
 			var eventDelegate = (MulticastDelegate)_selfType.GetField(eventName, BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(this);
 			if (eventDelegate == null) return;
 
-			foreach (var handler in eventDelegate.GetInvocationList())
-				handler.Method.Invoke(handler.Target, arguments);
+			try
+			{
+				foreach (var handler in eventDelegate.GetInvocationList())
+					handler.Method.Invoke(handler.Target, arguments);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"Exception in client script, upon triggering event: {eventName}:\r\n{e}");
+			}
 		}
 	}
 }
