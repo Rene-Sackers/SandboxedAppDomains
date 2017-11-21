@@ -7,112 +7,128 @@ using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
 using AppDomainToolkit;
-using CSharpSandbox.SharedApi;
+using CSharpSandbox.ClientScriptDomain;
+using CSharpSandbox.ClientSharedApi;
 
 namespace CSharpSandbox.Host
 {
-    public class ScriptInstance
-    {
-        private readonly string _scriptFolderPath;
-        
-        public bool IsRunning { get; private set; }
+	public class ScriptInstance
+	{
+		private readonly string _scriptDirectoryPath;
+		private readonly ClientApi _clientApi;
+		private readonly string _scriptDataDirectoryPath;
 
-        public ScriptInstance(string scriptFolderPath)
-        {
-            _scriptFolderPath = scriptFolderPath;
-        }
+		public bool IsRunning { get; private set; }
 
-        public void Start()
-        {
-            IsRunning = true;
+		public ScriptInstance(string scriptDirectoryPath, ClientApi clientApi)
+		{
+			_scriptDirectoryPath = scriptDirectoryPath;
+			_clientApi = clientApi;
+			_scriptDataDirectoryPath = Path.Combine(_scriptDirectoryPath, "Data");
 
-            var dllFiles = GetDllFiles().ToList();
+			Directory.CreateDirectory(_scriptDataDirectoryPath);
+		}
 
-            var permissionSet = new PermissionSet(PermissionState.None);
+		public void Start()
+		{
+			IsRunning = true;
 
-            permissionSet.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.MemberAccess)); // Needed for AppDomainToolkit loader
+			var dllFiles = GetDllFiles().ToList();
 
-            permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
-            permissionSet.AddPermission(new FileIOPermission(
-                FileIOPermissionAccess.Read | FileIOPermissionAccess.Write | FileIOPermissionAccess.Append | FileIOPermissionAccess.PathDiscovery,
-                _scriptFolderPath));
+			var permissionSet = new PermissionSet(PermissionState.None);
+			
+			permissionSet.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.MemberAccess)); // Needed for AppDomainToolkit loader
 
-            var allowedStrongNames = GetLoadedAssembliesStrongNames(permissionSet);
+			permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
+			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, _scriptDirectoryPath));
+			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write | FileIOPermissionAccess.Append | FileIOPermissionAccess.PathDiscovery, _scriptDataDirectoryPath));
 
-            var scriptDomainSetup = new AppDomainSetup
-            {
-                ApplicationTrust = new ApplicationTrust(permissionSet, allowedStrongNames)
-            };
-            
-            var clientScriptAppDomain = AppDomainContext.Create(scriptDomainSetup);
+			var allowedStrongNames = GetLoadedAssembliesStrongNames(permissionSet);
 
-            foreach (var dllFile in dllFiles)
-                clientScriptAppDomain.LoadAssembly(LoadMethod.LoadFrom, dllFile);
-            
-            var remoteScript = Remote<Loader>.CreateProxy(clientScriptAppDomain.Domain);
-            remoteScript.RemoteObject.LoadClientScripts(_scriptFolderPath);
-        }
-        
-        private static IEnumerable<StrongName> GetLoadedAssembliesStrongNames(PermissionSet permissionSet)
-        {
-            var allowedLibraries = new List<string>();
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                var path = GetAssemblyLocation(assembly);
-                if (!string.IsNullOrWhiteSpace(path))
-                {
-                    allowedLibraries.Add(path);
-                }
+			var scriptDomainSetup = new AppDomainSetup
+			{
+				ApplicationTrust = new ApplicationTrust(permissionSet, allowedStrongNames),
+			};
 
-                var tmpPath = assembly.ManifestModule.FullyQualifiedName;
-                if (path != tmpPath && File.Exists(tmpPath))
-                    allowedLibraries.Add(tmpPath);
+			var clientScriptAppDomain = AppDomainContext.Create(scriptDomainSetup);
+			clientScriptAppDomain.AssemblyImporter.AddProbePath(_scriptDirectoryPath);
+			clientScriptAppDomain.RemoteResolver.AddProbePath(_scriptDirectoryPath);
 
-                if (assembly.GlobalAssemblyCache && assembly.FullName.StartsWith("System"))
-                {
-                    allowedLibraries.Add(GetSystemPaths(assembly));
-                }
+			foreach (var dllFile in dllFiles)
+				clientScriptAppDomain.LoadAssembly(LoadMethod.LoadFrom, dllFile);
 
-                var strongName = assembly.Evidence.GetHostEvidence<StrongName>();
-                if (strongName != null)
-                    yield return strongName;
-            }
+			var remoteScript = Remote<Loader>.CreateProxy(clientScriptAppDomain.Domain);
 
-            permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, allowedLibraries.ToArray()));
-        }
+			try
+			{
+				remoteScript.RemoteObject.LoadClientScripts(_scriptDataDirectoryPath, _clientApi);
+			}
+			catch (SecurityException e)
+			{
+				Console.WriteLine("Security exception:\n" + e.Message);
+			}
+		}
 
-        private IEnumerable<string> GetDllFiles()
-        {
-            var loadedAssembliesFullNames = AppDomain.CurrentDomain.GetAssemblies().Select(a => a.FullName).ToList();
+		private static IEnumerable<StrongName> GetLoadedAssembliesStrongNames(PermissionSet permissionSet)
+		{
+			var allowedLibraries = new List<string>();
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+			{
+				var path = GetAssemblyLocation(assembly);
+				if (!string.IsNullOrWhiteSpace(path))
+				{
+					allowedLibraries.Add(path);
+				}
 
-            foreach (var dllFile in Directory.GetFiles(_scriptFolderPath, "*.dll"))
-            {
-                var dllFileFullName = Assembly.ReflectionOnlyLoadFrom(dllFile)?.FullName;
-                if (string.IsNullOrWhiteSpace(dllFileFullName)) continue;
-                if (loadedAssembliesFullNames.Contains(dllFileFullName)) continue;
+				var tmpPath = assembly.ManifestModule.FullyQualifiedName;
+				if (path != tmpPath && File.Exists(tmpPath))
+					allowedLibraries.Add(tmpPath);
 
-                yield return dllFile;
-            }
-        }
-        
-        private static string GetAssemblyLocation(Assembly assembly)
-        {
-            if (assembly.IsDynamic)
-                return null;
+				if (assembly.GlobalAssemblyCache && assembly.FullName.StartsWith("System"))
+				{
+					allowedLibraries.Add(GetSystemPaths(assembly));
+				}
 
-            var codeBase = assembly.CodeBase;
-            var uri = new UriBuilder(codeBase);
+				var strongName = assembly.Evidence.GetHostEvidence<StrongName>();
+				if (strongName != null)
+					yield return strongName;
+			}
 
-            var path = Uri.UnescapeDataString(uri.Path);
-            path = Path.Combine(Path.GetDirectoryName(path) ?? string.Empty, Path.GetFileName(assembly.Location) ?? string.Empty);
+			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, allowedLibraries.ToArray()));
+		}
 
-            return path;
-        }
+		private IEnumerable<string> GetDllFiles()
+		{
+			var loadedAssembliesFullNames = AppDomain.CurrentDomain.GetAssemblies().Select(a => a.FullName).ToList();
 
-        private static string GetSystemPaths(Assembly assembly)
-        {
-            var path = $@"C:\Windows\Microsoft.NET\Framework\{assembly.ImageRuntimeVersion}\{assembly.ManifestModule.Name}";
-            return path;
-        }
-    }
+			foreach (var dllFile in Directory.GetFiles(_scriptDirectoryPath, "*.dll"))
+			{
+				var dllFileFullName = Assembly.ReflectionOnlyLoadFrom(dllFile)?.FullName;
+				if (string.IsNullOrWhiteSpace(dllFileFullName)) continue;
+				if (loadedAssembliesFullNames.Contains(dllFileFullName)) continue;
+
+				yield return dllFile;
+			}
+		}
+
+		private static string GetAssemblyLocation(Assembly assembly)
+		{
+			if (assembly.IsDynamic)
+				return null;
+
+			var codeBase = assembly.CodeBase;
+			var uri = new UriBuilder(codeBase);
+
+			var path = Uri.UnescapeDataString(uri.Path);
+			path = Path.Combine(Path.GetDirectoryName(path) ?? string.Empty, Path.GetFileName(assembly.Location) ?? string.Empty);
+
+			return path;
+		}
+
+		private static string GetSystemPaths(Assembly assembly)
+		{
+			var path = $@"C:\Windows\Microsoft.NET\Framework\{assembly.ImageRuntimeVersion}\{assembly.ManifestModule.Name}";
+			return path;
+		}
+	}
 }

@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{95216719-21F7-4CDF-BC26-F63AACB1FBC0}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>CSharpSandbox.Host</RootNamespace>
-    <AssemblyName>CSharpSandbox.Host</AssemblyName>
+    <ProjectGuid>{73D5C470-6892-4B94-B654-17C5DC440466}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CSharpSandbox.ClientScriptDomain</RootNamespace>
+    <AssemblyName>CSharpSandbox.ClientScriptDomain</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,13 +33,9 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>CSharpSandbox.Host.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>CSharpSandbox.SharedApi.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppDomainToolkit, Version=1.0.4.1, Culture=neutral, PublicKeyToken=f2fc7ab5180cf5c4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\GitHub\AppDomainToolkit\AppDomainToolkit\bin\Debug\AppDomainToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,30 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="ClientScript.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScriptInstance.cs" />
-    <Compile Include="ScriptsHost.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="CSharpSandbox.Host.pfx" />
+    <None Include="CSharpSandbox.SharedApi.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSharpSandbox.ClientScriptDomain\CSharpSandbox.ClientScriptDomain.csproj">
-      <Project>{73d5c470-6892-4b94-b654-17c5dc440466}</Project>
-      <Name>CSharpSandbox.ClientScriptDomain</Name>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\CSharpSandbox.ClientSharedApi\CSharpSandbox.ClientSharedApi.csproj">
       <Project>{97be85c2-db74-4838-bdc2-57d8edce4c69}</Project>
       <Name>CSharpSandbox.ClientSharedApi</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Lib\AppDomainToolkit\AppDomainToolkit.dll" />
-    <Content Include="Lib\AppDomainToolkit\AppDomainToolkit.pdb" />
-    <Content Include="Lib\AppDomainToolkit\AppDomainToolkit.XML" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

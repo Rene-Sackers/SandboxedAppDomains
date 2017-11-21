@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{73D5C470-6892-4B94-B654-17C5DC440466}</ProjectGuid>
+    <ProjectGuid>{97BE85C2-DB74-4838-BDC2-57D8EDCE4C69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSharpSandbox.SharedApi</RootNamespace>
-    <AssemblyName>CSharpSandbox.SharedApi</AssemblyName>
+    <RootNamespace>CSharpSandbox.ClientSharedApi</RootNamespace>
+    <AssemblyName>CSharpSandbox.ClientSharedApi</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,7 +34,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>CSharpSandbox.SharedApi.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>CSharpSandbox.ClientSharedApi.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,12 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientScript.cs" />
-    <Compile Include="Loader.cs" />
+    <Compile Include="ClientApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CSharpSandbox.SharedApi.pfx" />
+    <None Include="CSharpSandbox.ClientSharedApi.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
