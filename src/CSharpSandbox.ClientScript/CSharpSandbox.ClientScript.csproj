@@ -56,10 +56,6 @@
       <Name>CSharpSandbox.ClientScriptDomain</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\CSharpSandbox.ClientSharedApi\CSharpSandbox.ClientSharedApi.csproj">
-      <Project>{97be85c2-db74-4838-bdc2-57d8edce4c69}</Project>
-      <Name>CSharpSandbox.ClientSharedApi</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

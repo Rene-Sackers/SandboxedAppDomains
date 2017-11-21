@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Security;
-using CSharpSandbox.ClientSharedApi;
 
 namespace CSharpSandbox.ClientScriptDomain
 {

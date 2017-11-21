@@ -1,4 +1,4 @@
-﻿namespace CSharpSandbox.ClientSharedApi
+﻿namespace CSharpSandbox.ClientScriptDomain
 {
 	public interface IClientApi
 	{
