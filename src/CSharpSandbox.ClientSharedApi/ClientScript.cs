@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSharpSandbox.ClientScriptDomain
+namespace CSharpSandbox.ClientSharedApi
 {
 	public abstract class ClientScript : MarshalByRefObject
 	{

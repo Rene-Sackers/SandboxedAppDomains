@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Security;
 
-namespace CSharpSandbox.ClientScriptDomain
+namespace CSharpSandbox.ClientSharedApi
 {
 	[SecurityCritical]
 	internal class Loader : MarshalByRefObject

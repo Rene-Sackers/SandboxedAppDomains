@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSandbox.Host", "CSharpSandbox.Host\CSharpSandbox.Host.csproj", "{95216719-21F7-4CDF-BC26-F63AACB1FBC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSandbox.ClientScript", "CSharpSandbox.ClientScript\CSharpSandbox.ClientScript.csproj", "{A51ECC8F-465A-41EF-BDF8-80F3B981CA0C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSandbox.ClientScriptDomain", "CSharpSandbox.ClientScriptDomain\CSharpSandbox.ClientScriptDomain.csproj", "{73D5C470-6892-4B94-B654-17C5DC440466}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSandbox.ClientSharedApi", "CSharpSandbox.ClientSharedApi\CSharpSandbox.ClientSharedApi.csproj", "{97BE85C2-DB74-4838-BDC2-57D8EDCE4C69}"
 EndProject
@@ -25,10 +23,6 @@ Global
 		{A51ECC8F-465A-41EF-BDF8-80F3B981CA0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A51ECC8F-465A-41EF-BDF8-80F3B981CA0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A51ECC8F-465A-41EF-BDF8-80F3B981CA0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73D5C470-6892-4B94-B654-17C5DC440466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73D5C470-6892-4B94-B654-17C5DC440466}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73D5C470-6892-4B94-B654-17C5DC440466}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73D5C470-6892-4B94-B654-17C5DC440466}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97BE85C2-DB74-4838-BDC2-57D8EDCE4C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97BE85C2-DB74-4838-BDC2-57D8EDCE4C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97BE85C2-DB74-4838-BDC2-57D8EDCE4C69}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using CSharpSandbox.ClientScriptDomain;
+using CSharpSandbox.ClientSharedApi;
 
 #pragma warning disable 67
 

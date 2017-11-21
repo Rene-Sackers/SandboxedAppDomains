@@ -63,11 +63,6 @@
     <None Include="CSharpSandbox.Host.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSharpSandbox.ClientScriptDomain\CSharpSandbox.ClientScriptDomain.csproj">
-      <Project>{73d5c470-6892-4b94-b654-17c5dc440466}</Project>
-      <Name>CSharpSandbox.ClientScriptDomain</Name>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\CSharpSandbox.ClientSharedApi\CSharpSandbox.ClientSharedApi.csproj">
       <Project>{97be85c2-db74-4838-bdc2-57d8edce4c69}</Project>
       <Name>CSharpSandbox.ClientSharedApi</Name>

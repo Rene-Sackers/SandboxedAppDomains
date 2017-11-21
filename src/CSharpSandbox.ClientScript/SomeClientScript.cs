@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace CSharpSandbox.ClientScript
 {
-	public class SomeClientScript : ClientScriptDomain.ClientScript
+	public class SomeClientScript : ClientSharedApi.ClientScript
 	{
 		protected override void Loaded()
 		{

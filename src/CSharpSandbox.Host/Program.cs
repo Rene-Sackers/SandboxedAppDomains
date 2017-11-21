@@ -13,8 +13,7 @@ namespace CSharpSandbox.Host
 			scriptsHost.StartScripts();
 
 			clientApi.RaiseEvent(nameof(ClientApi.SampleClientEvent), "Test argument.");
-
-			Console.WriteLine("Done");
+			
 			Console.ReadKey();
 		}
 	}

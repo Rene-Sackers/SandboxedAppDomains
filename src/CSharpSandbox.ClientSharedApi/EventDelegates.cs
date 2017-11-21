@@ -1,4 +1,4 @@
-﻿namespace CSharpSandbox.ClientScriptDomain
+﻿namespace CSharpSandbox.ClientSharedApi
 {
 	public static class EventDelegates
 	{

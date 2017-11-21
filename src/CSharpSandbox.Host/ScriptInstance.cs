@@ -7,7 +7,7 @@ using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
 using AppDomainToolkit;
-using CSharpSandbox.ClientScriptDomain;
+using CSharpSandbox.ClientSharedApi;
 
 namespace CSharpSandbox.Host
 {
