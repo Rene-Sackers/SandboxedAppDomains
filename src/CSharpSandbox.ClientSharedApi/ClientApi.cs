@@ -5,7 +5,6 @@ using System.Reflection;
 
 namespace CSharpSandbox.ClientSharedApi
 {
-	[Serializable]
 	public class ClientApi : MarshalByRefObject
 	{
 		private readonly Type _selfType;
