@@ -9,9 +9,7 @@ namespace CSharpSandbox.Host
 		public static void Main()
 		{
 			var clientApi = new ClientApi();
-
-			clientApi.Test = "a";
-
+			
 			var scriptsHost = new ScriptsHost(clientApi);
 			scriptsHost.Initialize();
 			scriptsHost.StartScripts();

@@ -11,8 +11,6 @@ namespace CSharpSandbox.ClientScript
 			//filePath = "C:\\text.txt";
 			File.WriteAllText(filePath, AppDomain.CurrentDomain.FriendlyName);
 
-			ClientApi.Test = "b";
-
 			ClientApi.GameTick += ClientApiOnGameTick;
 		}
 

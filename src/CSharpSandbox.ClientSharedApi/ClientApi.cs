@@ -14,8 +14,6 @@ namespace CSharpSandbox.ClientSharedApi
 
 		public event GameTickHandler GameTick;
 
-		public string Test { get; set; }
-
 		public ClientApi()
 		{
 			_selfType = GetType();
