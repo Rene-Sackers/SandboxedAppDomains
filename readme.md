@@ -22,6 +22,18 @@ This project uses [@jduv](https://github.com/jduv)'s [AppDomainToolkit](https://
 
 Due to an issue discovered in the code, a custom compiled version of this library has been included (with permission) until the NuGet package gets updated. See [issue #25](https://github.com/jduv/AppDomainToolkit/issues/25).
 
+## Sample code
+
+The sample code demonstrates a plugin script (`CSharpSandbox.ClientScript`) which gets loaded into the host (`CSharpSandbox.Host`), and there's an exposed API `ClientApi`.
+
+The plugin script demonstrates a receiving an event, which gets handled in the restricted `CSharpSandbox.ClientScript` domain, and it calling a method on the API, which gets handled in the `CSharpSandbox.Host` domain.
+
+This is done over a single object instance of `ClientApi`. The plugin script only knows about the `IClientApi` interface, which exposes the event and methods. But the actual instance is declared inside `CSharpSandbox.Host`.
+
+Also any exceptions thrown while invoking events are caught, to prevent the host from crashing due to a plugin script, as demonstrated below.
+
+![screenshot](doc/screenshot.png)
+
 ## .pfx password
 
 In case you need it:
