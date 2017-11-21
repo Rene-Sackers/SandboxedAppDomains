@@ -37,9 +37,11 @@ namespace CSharpSandbox.Host
 
 			var permissionSet = new PermissionSet(PermissionState.None);
 			
-			permissionSet.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.MemberAccess)); // Needed for AppDomainToolkit loader
+			permissionSet.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.MemberAccess)); // Needed for AppDomainToolkit loader. AppDomainContext.cs, line 106, RemoteAction.Invoke(...)
 
-			permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
+			permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution)); // Needed to load and execute the assembly at all
+			permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.SerializationFormatter)); // Needed when accessing ClientApi on the provided IClientApi interface from the plugin script. Why? Not sure.
+
 			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, _scriptDirectoryPath));
 			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write | FileIOPermissionAccess.Append | FileIOPermissionAccess.PathDiscovery, _scriptDataDirectoryPath));
 

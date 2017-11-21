@@ -7,7 +7,7 @@ namespace CSharpSandbox.ClientScriptDomain
 	{
 		public string DataDirectoryPath { get; internal set; }
 
-		public ClientApi ClientApi { get; internal set; }
+		public IClientApi ClientApi { get; internal set; }
 
 		internal void CallLoaded()
 		{

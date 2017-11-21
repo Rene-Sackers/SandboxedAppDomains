@@ -8,7 +8,7 @@ namespace CSharpSandbox.ClientScriptDomain
 	[SecurityCritical]
 	internal class Loader : MarshalByRefObject
 	{
-		public void LoadClientScripts(string dataDirectoryPath, ClientApi clientApi)
+		public void LoadClientScripts(string dataDirectoryPath, IClientApi clientApi)
 		{
 			var allTypes = AppDomain.CurrentDomain
 				.GetAssemblies()

@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Reflection;
+using CSharpSandbox.ClientSharedApi;
 
 #pragma warning disable 67
 
-namespace CSharpSandbox.ClientSharedApi
+namespace CSharpSandbox.Host
 {
-	public class ClientApi : MarshalByRefObject
+	public class ClientApi : MarshalByRefObject, IClientApi
 	{
 		private readonly Type _selfType;
 
-		public delegate void GameTickHandler();
-
-		public event GameTickHandler GameTick;
+		public event EventDelegates.GameTickHandler GameTick;
 
 		public ClientApi()
 		{
