@@ -32,18 +32,23 @@ namespace CSharpSandbox.Host
 		{
 			IsRunning = true;
 
-			var dllFiles = GetDllFiles().ToList();
+			var clientScriptAppDomain = CreateScriptAppDomain();
 
-			var permissionSet = new PermissionSet(PermissionState.None);
-			
-			permissionSet.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.MemberAccess)); // Needed for AppDomainToolkit loader. AppDomainContext.cs, line 106, RemoteAction.Invoke(...)
+			var remoteScript = Remote<Loader>.CreateProxy(clientScriptAppDomain.Domain);
 
-			permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution)); // Needed to load and execute the assembly at all
-			permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.SerializationFormatter)); // Needed when accessing ClientApi on the provided IClientApi interface from the plugin script. Why? Not sure.
+			try
+			{
+				remoteScript.RemoteObject.LoadClientScripts(_scriptDataDirectoryPath, _clientApi);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"Failed to initialize script {_scriptDirectoryPath}:\r\n" + e.Message);
+			}
+		}
 
-			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, _scriptDirectoryPath));
-			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write | FileIOPermissionAccess.Append | FileIOPermissionAccess.PathDiscovery, _scriptDataDirectoryPath));
-
+		private AppDomainContext<AssemblyTargetLoader, PathBasedAssemblyResolver> CreateScriptAppDomain()
+		{
+			var permissionSet = CreatePermissionSet();
 			var allowedStrongNames = GetLoadedAssembliesStrongNames(permissionSet);
 
 			var scriptDomainSetup = new AppDomainSetup
@@ -55,19 +60,25 @@ namespace CSharpSandbox.Host
 			clientScriptAppDomain.AssemblyImporter.AddProbePath(_scriptDirectoryPath);
 			clientScriptAppDomain.RemoteResolver.AddProbePath(_scriptDirectoryPath);
 
-			foreach (var dllFile in dllFiles)
+			foreach (var dllFile in GetDllFiles())
 				clientScriptAppDomain.LoadAssembly(LoadMethod.LoadFrom, dllFile);
 
-			var remoteScript = Remote<Loader>.CreateProxy(clientScriptAppDomain.Domain);
+			return clientScriptAppDomain;
+		}
 
-			try
-			{
-				remoteScript.RemoteObject.LoadClientScripts(_scriptDataDirectoryPath, _clientApi);
-			}
-			catch (SecurityException e)
-			{
-				Console.WriteLine("Security exception:\n" + e.Message);
-			}
+		private PermissionSet CreatePermissionSet()
+		{
+			var permissionSet = new PermissionSet(PermissionState.None);
+
+			permissionSet.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.MemberAccess)); // Needed for AppDomainToolkit loader. AppDomainContext.cs, line 106, RemoteAction.Invoke(...)
+
+			permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution)); // Needed to load and execute the assembly at all
+			permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.SerializationFormatter)); // Needed when accessing ClientApi on the provided IClientApi interface from the plugin script. Why? Not sure.
+
+			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, _scriptDirectoryPath));
+			permissionSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write | FileIOPermissionAccess.Append | FileIOPermissionAccess.PathDiscovery, _scriptDataDirectoryPath));
+
+			return permissionSet;
 		}
 
 		private static IEnumerable<StrongName> GetLoadedAssembliesStrongNames(PermissionSet permissionSet)
