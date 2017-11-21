@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
-using CSharpSandbox.ClientSharedApi;
 
 namespace CSharpSandbox.Host
 {
@@ -14,22 +12,10 @@ namespace CSharpSandbox.Host
 			scriptsHost.Initialize();
 			scriptsHost.StartScripts();
 
-			StartTicker(clientApi);
+			clientApi.RaiseEvent(nameof(ClientApi.SampleClientEvent), "Test argument.");
 
 			Console.WriteLine("Done");
 			Console.ReadKey();
-		}
-
-		private static void StartTicker(ClientApi clientApi)
-		{
-			Task.Run(async () =>
-			{
-				while (true)
-				{
-					await Task.Delay(1000);
-					clientApi.RaiseEvent(nameof(ClientApi.GameTick));
-				}
-			});
 		}
 	}
 }

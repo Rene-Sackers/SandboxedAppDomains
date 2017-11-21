@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CSharpSandbox.ClientSharedApi;
 
 namespace CSharpSandbox.Host
 {

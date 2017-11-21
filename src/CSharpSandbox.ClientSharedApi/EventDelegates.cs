@@ -2,6 +2,6 @@
 {
 	public static class EventDelegates
 	{
-		public delegate void GameTickHandler();
+		public delegate void SampleClientEventHandler(string argument);
 	}
 }

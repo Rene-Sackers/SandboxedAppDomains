@@ -2,6 +2,8 @@
 {
 	public interface IClientApi
 	{
-		event EventDelegates.GameTickHandler GameTick;
+		event EventDelegates.SampleClientEventHandler SampleClientEvent;
+
+		void SampleApiMethod(string argument);
 	}
 }

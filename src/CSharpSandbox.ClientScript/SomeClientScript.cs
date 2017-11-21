@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 
 namespace CSharpSandbox.ClientScript
 {
@@ -11,12 +12,14 @@ namespace CSharpSandbox.ClientScript
 			//filePath = "C:\\text.txt";
 			File.WriteAllText(filePath, AppDomain.CurrentDomain.FriendlyName);
 
-			ClientApi.GameTick += ClientApiOnGameTick;
+			ClientApi.SampleApiMethod("Test argument.");
+
+			ClientApi.SampleClientEvent += ClientApiOnSampleClientEvent;
 		}
 
-		private void ClientApiOnGameTick()
+		private static void ClientApiOnSampleClientEvent(string argument)
 		{
-			Console.WriteLine("Game tick");
+			Console.WriteLine($"Event on client triggered: {argument}. Executing assembly: {Assembly.GetExecutingAssembly()}");
 		}
 	}
 }

@@ -10,11 +10,16 @@ namespace CSharpSandbox.Host
 	{
 		private readonly Type _selfType;
 
-		public event EventDelegates.GameTickHandler GameTick;
+		public event EventDelegates.SampleClientEventHandler SampleClientEvent;
 
 		public ClientApi()
 		{
 			_selfType = GetType();
+		}
+
+		public void SampleApiMethod(string argument)
+		{
+			Console.WriteLine($"Client API method called. Argument: {argument}. Executing assembly: {Assembly.GetExecutingAssembly()}");
 		}
 		
 		internal void RaiseEvent(string eventName, params object[] arguments)
